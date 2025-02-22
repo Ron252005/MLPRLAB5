@@ -19,5 +19,5 @@ jobs:
         run: |
           pip install numpy pandas scikit-learn
 
-      - name: Run test script
-        run: python test_script.py
+      - name: Run Classification Script
+        run: python distance_classification.py
