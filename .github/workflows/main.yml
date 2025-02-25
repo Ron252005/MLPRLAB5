@@ -1,23 +1,25 @@
-name: Run Tests
-
+name: Run Notebook
 on: [push]
-
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
+      - uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-
       - name: Install dependencies
         run: |
-          pip install numpy pandas scikit-learn
-
-      - name: Run Classification Script
-        run: python distance_classification.py
+          pip install numpy pandas matplotlib scikit-learn opencv-python wandb jupyter
+      - name: Run Jupyter Notebook
+        run: |
+          jupyter nbconvert --to notebook --execute kaggle_shreyansh_lab5.ipynb --output executed_notebook.ipynb
+      - name: Verify Notebook Execution
+        run: |
+          if [ -f "executed_notebook.ipynb" ]; then
+            echo "Notebook executed successfully"
+          else
+            echo "Notebook execution failed"
+            exit 1
+          fi
